@@ -1,0 +1,24 @@
+# GET https://jsonplaceholder.typicode.com/posts/1 
+
+# POST https://jsonplaceholder.typicode.com/posts 
+# Content-Type: "application/json"
+
+# {
+#   "title": "foo",
+#   "body": "bar",
+#   "userId": 1
+# }
+
+# PUT https://jsonplaceholder.typicode.com/posts/1 HTTP/1.1
+# Content-Type: "application/json"
+
+# {
+#   "title": "new foo",
+#   "body": "new bar",
+#   "userId": 1
+# }
+
+###bên trên là mẫu ví dụ gọi api trong vscode. Khi phát triền api với spirngboot, sẽ gọi qua vscode
+
+
+GET http://localhost:8080/students
