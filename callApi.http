@@ -22,3 +22,13 @@
 
 
 GET http://localhost:8080/students
+
+POST  http://localhost:8080/students
+Content-Type: "application/json"
+
+{
+  "id": 11,
+  "name": "John",
+  "age": 20,
+  "address": "Hà Nội"
+}
