@@ -1,8 +1,6 @@
 package api.restful.first_app.students;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import api.restful.first_app.common.ApiResponse;
 
@@ -14,18 +12,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class StudentSerrvice {
     StudentRepository studentRepository;
-    Student student1 = new Student(1, "John", 20, "Hà Nội");
-    Student student2 = new Student(2, "John", 20, "Hà Nội");
-    Student student3 = new Student(3, "John", 20, "Hà Nội");
-    Student student4 = new Student(3, "John", 20, "Hà Nội");
-
-    ArrayList<Student> arr = new ArrayList<>();
-
-    public StudentSerrvice() {
-        arr.add(student1);
-        arr.add(student2);
-        arr.add(student3);
-    }
 
     // connect với bean bên StudentRespository
     @Autowired
@@ -48,8 +34,6 @@ public class StudentSerrvice {
 
     public ResponseEntity<ApiResponse> addStudent(Student student) {
         // lấy được student trong request được truyền từ controller
-        arr.add(student);
-
         // lấy result từ bên insert Respository
         Object result = studentRepository.inserDatatoDataBase(student);
 
@@ -61,9 +45,9 @@ public class StudentSerrvice {
 
         Boolean isUpdate = studentRepository.updateStudentInDataBase(id, student);
         if (isUpdate) {
-            return new ResponseEntity<>("delete success", HttpStatus.OK);
+            return new ResponseEntity<>("Update row success", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("delete failed", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Update row failed or not exits row", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -71,9 +55,9 @@ public class StudentSerrvice {
 
         Boolean isDelete = studentRepository.deleteStudentInDataBase(id);
         if (isDelete) {
-            return new ResponseEntity<>("Update row success", HttpStatus.OK);
+            return new ResponseEntity<>("Delete row success", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Update row failed", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Delete row failed or not exits row", HttpStatus.BAD_REQUEST);
         }
 
     }

@@ -1,6 +1,5 @@
 package api.restful.first_app.students;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
