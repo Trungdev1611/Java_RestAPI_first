@@ -40,15 +40,15 @@ public class StudentController {
     }
 
     @PutMapping("/students/{id}")
-    public ResponseEntity<ApiResponse> UpdateStudent(@PathVariable int id, @RequestBody Student student) { // Optional
-                                                                                                           // cho phép
+    public ResponseEntity<String> UpdateStudent(@PathVariable int id, @RequestBody Student student) { // Optional
+                                                                                                      // cho phép
         // trả về giá trị null
         System.out.println("Student:::" + student.toString());
         return studentSerrvice.updateStudent(id, student);
     }
 
     @DeleteMapping("/students/{id}")
-    public ResponseEntity<ApiResponse> DeleteStudent(@PathVariable int id) {
+    public ResponseEntity<?> DeleteStudent(@PathVariable int id) {
         return studentSerrvice.deleteStudent(id);
 
     }
