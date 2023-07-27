@@ -1,6 +1,7 @@
 package api.restful.first_app.students;
 
 import java.util.List;
+import java.util.Optional;
 
 import api.restful.first_app.common.ApiResponse;
 
@@ -22,7 +23,8 @@ public class StudentSerrvice {
     // ResponseEntity<?> sử dụng dấu ? để cho kiểu dữ liệu tùy ý
     public ResponseEntity<ApiResponse> getAll() {
 
-        List<Student> arr = studentRepository.getAllDataStudentInDatabase();
+        // sử dụng method findAll get toàn bộ dữ liệu thay cho method tự tạo lúc trước
+        List<Student> arr = studentRepository.findAll();
         ApiResponse responseSuccess = new ApiResponse("success", arr);
         return new ResponseEntity<>(responseSuccess, HttpStatus.OK); // sau java7 ta chỉ cần sử dụng dấu <> còn trước
                                                                      // java7 return new
@@ -31,30 +33,41 @@ public class StudentSerrvice {
     }
 
     // thêm data vào cơ sở dữ liệu
-
     public ResponseEntity<ApiResponse> addStudent(Student student) {
         // lấy được student trong request được truyền từ controller
         // lấy result từ bên insert Respository
-        Object result = studentRepository.inserDatatoDataBase(student);
+
+        // sử dụng save thay cho method addStudent tự tạo lúc trước
+        Object result = studentRepository.save(student);
 
         ApiResponse responseSuccess = new ApiResponse("success", result);
         return new ResponseEntity<>(responseSuccess, HttpStatus.OK);
     }
 
-    public ResponseEntity<String> updateStudent(int id, Student student) {
+    public ResponseEntity<ApiResponse> updateStudent(int id, Student student) {
+        Optional<Student> optionalStudent = studentRepository.findById(id);
 
-        Boolean isUpdate = studentRepository.updateStudentInDataBase(id, student);
-        if (isUpdate) {
-            return new ResponseEntity<>("Update row success", HttpStatus.OK);
+        if (optionalStudent.isPresent()) {
+            Student existingStudent = optionalStudent.get();
+            existingStudent.setName(student.getName());
+            existingStudent.setAge(student.getAge());
+            existingStudent.setAddress(student.getAddress());
+
+            studentRepository.save(existingStudent);
+
+            ApiResponse responseSuccResponse = new ApiResponse("updateSuccess", existingStudent);
+            return new ResponseEntity<ApiResponse>(responseSuccResponse, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Update row failed or not exits row", HttpStatus.BAD_REQUEST);
+            ApiResponse responseError = new ApiResponse("updateSuccess", null);
+            return new ResponseEntity<ApiResponse>(responseError, HttpStatus.BAD_REQUEST);
         }
     }
 
     public ResponseEntity<String> deleteStudent(int id) {
 
-        Boolean isDelete = studentRepository.deleteStudentInDataBase(id);
-        if (isDelete) {
+        Boolean isFound = studentRepository.existsById(id);
+        if (isFound) {
+            studentRepository.deleteById(id);
             return new ResponseEntity<>("Delete row success", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Delete row failed or not exits row", HttpStatus.BAD_REQUEST);

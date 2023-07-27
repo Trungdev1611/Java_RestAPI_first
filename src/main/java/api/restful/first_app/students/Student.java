@@ -1,8 +1,20 @@
 package api.restful.first_app.students;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity // Tạo table Student trong database
 public class Student {
     // file này sẽ định nghĩa các thông tin về sinh viên - thường được gọi là Model
     // hoặc Entity
+    public Student() {
+
+    }
+
+    @Id // chỉ định id là primarykey
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // id tự tăng, tự tạo
     private int id;
     private String name;
     private int age;
