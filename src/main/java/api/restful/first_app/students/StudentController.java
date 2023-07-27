@@ -37,8 +37,8 @@ public class StudentController {
     }
 
     @PutMapping("/students/{id}")
-    public ResponseEntity<String> UpdateStudent(@PathVariable int id, @RequestBody Student student) { // Optional
-                                                                                                      // cho phép
+    public ResponseEntity<ApiResponse> UpdateStudent(@PathVariable int id, @RequestBody Student student) { // Optional
+        // cho phép
         // trả về giá trị null
         System.out.println("Student:::" + student.toString());
         return studentSerrvice.updateStudent(id, student);
