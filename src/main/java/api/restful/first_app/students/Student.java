@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity // Tạo table Student trong database
+    //nếu ta sử dụng annotation @Table(name = "tên bảng") thì sẽ thay thế tên mặc định là tên bảng. Tên mặc định sẽ là tên class
 public class Student {
     // file này sẽ định nghĩa các thông tin về sinh viên - thường được gọi là Model
     // hoặc Entity
